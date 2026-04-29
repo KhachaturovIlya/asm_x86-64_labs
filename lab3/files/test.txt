@@ -1,0 +1,7 @@
+apple apricot banana avocado cherry
+dog door cat desk diamond
+sun star moon sky super space
+linux kernel windows library loop link
+1test 1alpha 2beta 1gamma 3omega
+   multiple   spaces   test   case
+a b c a d a

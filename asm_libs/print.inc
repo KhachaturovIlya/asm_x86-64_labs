@@ -1,0 +1,3 @@
+extern print_signed_number
+extern print_space
+extern print_nl

@@ -1,0 +1,22 @@
+#!/bin/bash
+
+mkdir -p build
+
+if [[ -z $SORT ]]; then 
+  echo "Value SORT must me iniatilizied!"
+  echo "1 - SORT_ASCENDING."
+  echo "2 - SORT_DECREASING."
+  exit 
+elif [[ $SORT -ne 2 && $SORT -ne 1 ]]; then
+  echo "Wrong SORT value!"
+  exit 
+fi
+
+if [[ -z $MATRIX ]]; then 
+  echo "Value MATRIX must be initialized!" 
+  exit 
+fi
+
+nasm -g -f elf64 lab2.s -o build/lab2.o -DSORT_ASCENDING=$SORT -DMATRIX_FILE=\"$MATRIX\"
+
+ld build/lab2.o -o build/lab2

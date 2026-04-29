@@ -1,0 +1,9 @@
+#!/bin/bash
+
+mkdir -p build
+
+nasm -g -f elf64 lab4.s -o build/lab4.o
+
+/usr/bin/ld -static -z noexecstack \
+  -L /lib/gcc/x86_64-pc-linux-gnu/15.2.1 -L /lib /usr/lib/crt1.o /usr/lib/crti.o build/lab4.o /usr/lib/crtn.o \
+  --start-group -lc -lm -lpthread -lgcc -lgcc_eh --end-group -o build/lab4
