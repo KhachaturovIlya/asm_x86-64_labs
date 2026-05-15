@@ -1,26 +1,35 @@
 TARGET = main
-
-CC = gcc
+CC     = gcc
+AS     = nasm
+ASFLAGS = -f elf64 -g
 
 MY_CFLAGS = -g -Wall -Wextra -fsanitize=address
-LDFLAGS = -fsanitize=address
+LDFLAGS   = -fsanitize=address
 
 override CFLAGS += $(MY_CFLAGS)
 
-SRCS = main.c
-OBJS = $(SRCS:.c=.o)
-
 all: $(TARGET)
 
-$(TARGET): $(OBJS)
-	$(CC) $(OBJS) -o $(TARGET) $(LDFLAGS)
+$(TARGET): main.o black_bmp_c.o
+	$(CC) main.o black_bmp_c.o -o $(TARGET) $(LDFLAGS)
 
-%.o: %.c
+asm: main.o black_bmp_asm.o
+	$(CC) main.o black_bmp_asm.o -o $(TARGET) $(LDFLAGS)
+
+main.o: main.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+black_bmp_c.o: black_bmp.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+black_bmp_asm.o: black_bmp.s
+	$(AS) $(ASFLAGS) $< -o $@
+
 clean:
-	rm -f $(OBJS) $(TARGET)
+	rm -f main.o black_bmp_c.o black_bmp_asm.o $(TARGET)
 
 re: clean all
 
-.PHONY: clean all re
+re_asm: clean asm
+
+.PHONY: clean all re asm re_asm
